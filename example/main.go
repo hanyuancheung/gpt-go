@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	gpt3 "github.com/csuzhang/gpt-go"
+	gpt "github.com/hanyuancheung/gpt-go"
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +16,7 @@ func main() {
 	log.SetOutput(new(NullWriter))
 	apiKey := getAPIKeyFromEnv()
 	ctx := context.Background()
-	client := gpt3.NewClient(apiKey)
+	client := gpt.NewClient(apiKey)
 	rootCmd := &cobra.Command{
 		Use:   "chatgpt",
 		Short: "Chat with ChatGPT in console.",

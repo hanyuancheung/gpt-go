@@ -1,4 +1,4 @@
-module github.com/csuzhang/gpt-go
+module github.com/hanyuancheung/gpt-go
 
 go 1.19
 
