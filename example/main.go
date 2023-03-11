@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	gpt "github.com/hanyuancheung/gpt-go"
+	"github.com/hanyuancheung/gpt-go"
 	"github.com/spf13/cobra"
 )
 
@@ -63,14 +63,14 @@ func validateQuestion(question string) string {
 }
 
 // GetResponse get response from gpt3
-func GetResponse(client gpt3.Client, ctx context.Context, question string) {
-	err := client.CompletionStreamWithEngine(ctx, gpt3.TextDavinci003Engine, gpt3.CompletionRequest{
+func GetResponse(client gpt.Client, ctx context.Context, question string) {
+	err := client.CompletionStreamWithEngine(ctx, gpt.TextDavinci003Engine, gpt.CompletionRequest{
 		Prompt: []string{
 			question,
 		},
-		MaxTokens:   gpt3.IntPtr(3000),
-		Temperature: gpt3.Float32Ptr(0),
-	}, func(resp *gpt3.CompletionResponse) {
+		MaxTokens:   gpt.IntPtr(3000),
+		Temperature: gpt.Float32Ptr(0),
+	}, func(resp *gpt.CompletionResponse) {
 		fmt.Print(resp.Choices[0].Text)
 	})
 	if err != nil {
