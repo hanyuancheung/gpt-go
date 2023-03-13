@@ -7,6 +7,7 @@ GPT-Go: GPT-3 Go-SDK 客户端, 封装 OpenAI 官方 GPT-3 APIs.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/csuzhang/gpt-go/main/LICENSE) ![Go](https://github.com/hanyuancheung/gpt-go/workflows/Go/badge.svg)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/hanyuancheung/gpt-go)](https://pkg.go.dev/github.com/hanyuancheung/gpt-go)
+[![Go Report Card](https://goreportcard.com/badge/hanyuancheung/gpt-go)](https://goreportcard.com/report/hanyuancheung/gpt-go)
 
 OpenAI 官方文档 API 参考: https://platform.openai.com/docs/api-reference/introduction
 
