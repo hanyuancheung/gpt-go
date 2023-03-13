@@ -64,12 +64,13 @@ func validateQuestion(question string) string {
 
 // GetResponse get response from gpt3
 func GetResponse(client gpt.Client, ctx context.Context, question string) {
-	err := client.CompletionStreamWithEngine(ctx, gpt.TextDavinci003Engine, gpt.CompletionRequest{
+	err := client.CompletionStreamWithEngine(ctx, gpt.CompletionRequest{
+		Model: gpt.TextDavinci003Engine,
 		Prompt: []string{
 			question,
 		},
-		MaxTokens:   gpt.IntPtr(3000),
-		Temperature: gpt.Float32Ptr(0),
+		MaxTokens:   3000,
+		Temperature: 0,
 	}, func(resp *gpt.CompletionResponse) {
 		fmt.Print(resp.Choices[0].Text)
 	})
