@@ -198,9 +198,7 @@ func (c *client) ChatCompletion(ctx context.Context, request ChatCompletionReque
 
 // ChatCompletionStream creates a completion with the Chat completion endpoint which
 // is what powers the ChatGPT experience.
-func (c *client) ChatCompletionStream(
-	ctx context.Context,
-	request ChatCompletionRequest,
+func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletionRequest,
 	onData func(*ChatCompletionStreamResponse)) error {
 	if request.Model == "" {
 		request.Model = GPT3Dot5Turbo
