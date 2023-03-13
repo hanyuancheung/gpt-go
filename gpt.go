@@ -15,42 +15,42 @@ import (
 
 // Define GPT-3 Engine Types
 const (
-	TextAda001Engine     = "text-ada-001"
-	TextBabbage001Engine = "text-babbage-001"
-	TextCurie001Engine   = "text-curie-001"
-	TextDavinci001Engine = "text-davinci-001"
-	TextDavinci002Engine = "text-davinci-002"
-	TextDavinci003Engine = "text-davinci-003"
-	AdaEngine            = "ada"
-	BabbageEngine        = "babbage"
-	CurieEngine          = "curie"
-	DavinciEngine        = "davinci"
-	DefaultEngine        = DavinciEngine
+	TextAda001Engine     = "text-ada-001"     // TextAda001Engine Text Ada 001
+	TextBabbage001Engine = "text-babbage-001" // TextBabbage001Engine Text Babbage 001
+	TextCurie001Engine   = "text-curie-001"   // TextCurie001Engine Text Curie 001
+	TextDavinci001Engine = "text-davinci-001" // TextDavinci001Engine Text Davinci 001
+	TextDavinci002Engine = "text-davinci-002" // TextDavinci002Engine Text Davinci 002
+	TextDavinci003Engine = "text-davinci-003" // TextDavinci003Engine Text Davinci 003
+	AdaEngine            = "ada"              // AdaEngine Ada
+	BabbageEngine        = "babbage"          // BabbageEngine Babbage
+	CurieEngine          = "curie"            // CurieEngine Curie
+	DavinciEngine        = "davinci"          // DavinciEngine Davinci
+	DefaultEngine        = DavinciEngine      // DefaultEngine Default Engine
 )
 
 // EmbeddingEngine is the type of the embedding engine
 type EmbeddingEngine string
 
 const (
-	GPT3Dot5Turbo             = "gpt-3.5-turbo"
-	GPT3Dot5Turbo0301         = "gpt-3.5-turbo-0301"
-	TextSimilarityAda001      = "text-similarity-ada-001"
-	TextSimilarityBabbage001  = "text-similarity-babbage-001"
-	TextSimilarityCurie001    = "text-similarity-curie-001"
-	TextSimilarityDavinci001  = "text-similarity-davinci-001"
-	TextSearchAdaDoc001       = "text-search-ada-doc-001"
-	TextSearchAdaQuery001     = "text-search-ada-query-001"
-	TextSearchBabbageDoc001   = "text-search-babbage-doc-001"
-	TextSearchBabbageQuery001 = "text-search-babbage-query-001"
-	TextSearchCurieDoc001     = "text-search-curie-doc-001"
-	TextSearchCurieQuery001   = "text-search-curie-query-001"
-	TextSearchDavinciDoc001   = "text-search-davinci-doc-001"
-	TextSearchDavinciQuery001 = "text-search-davinci-query-001"
-	CodeSearchAdaCode001      = "code-search-ada-code-001"
-	CodeSearchAdaText001      = "code-search-ada-text-001"
-	CodeSearchBabbageCode001  = "code-search-babbage-code-001"
-	CodeSearchBabbageText001  = "code-search-babbage-text-001"
-	TextEmbeddingAda002       = "text-embedding-ada-002"
+	GPT3Dot5Turbo             = "gpt-3.5-turbo"                 // GPT3Dot5Turbo GPT-3.5 Turbo
+	GPT3Dot5Turbo0301         = "gpt-3.5-turbo-0301"            // GPT3Dot5Turbo0301 GPT-3.5 Turbo 0301
+	TextSimilarityAda001      = "text-similarity-ada-001"       // TextSimilarityAda001 Text Similarity Ada 001
+	TextSimilarityBabbage001  = "text-similarity-babbage-001"   // TextSimilarityBabbage001 Text Similarity Babbage 001
+	TextSimilarityCurie001    = "text-similarity-curie-001"     // TextSimilarityCurie001 Text Similarity Curie 001
+	TextSimilarityDavinci001  = "text-similarity-davinci-001"   // TextSimilarityDavinci001 Text Similarity Davinci 001
+	TextSearchAdaDoc001       = "text-search-ada-doc-001"       // TextSearchAdaDoc001 Text Search Ada Doc 001
+	TextSearchAdaQuery001     = "text-search-ada-query-001"     // TextSearchAdaQuery001 Text Search Ada Query 001
+	TextSearchBabbageDoc001   = "text-search-babbage-doc-001"   // TextSearchBabbageDoc001 Text Search Babbage Doc 001
+	TextSearchBabbageQuery001 = "text-search-babbage-query-001" // TextSearchBabbageQuery001 Text Search Babbage Query 001
+	TextSearchCurieDoc001     = "text-search-curie-doc-001"     // TextSearchCurieDoc001 Text Search Curie Doc 001
+	TextSearchCurieQuery001   = "text-search-curie-query-001"   // TextSearchCurieQuery001 Text Search Curie Query 001
+	TextSearchDavinciDoc001   = "text-search-davinci-doc-001"   // TextSearchDavinciDoc001 Text Search Davinci Doc 001
+	TextSearchDavinciQuery001 = "text-search-davinci-query-001" // TextSearchDavinciQuery001 Text Search Davinci Query 001
+	CodeSearchAdaCode001      = "code-search-ada-code-001"      // CodeSearchAdaCode001 Code Search Ada Code 001
+	CodeSearchAdaText001      = "code-search-ada-text-001"      // CodeSearchAdaText001 Code Search Ada Text 001
+	CodeSearchBabbageCode001  = "code-search-babbage-code-001"  // CodeSearchBabbageCode001 Code Search Babbage Code 001
+	CodeSearchBabbageText001  = "code-search-babbage-text-001"  // CodeSearchBabbageText001 Code Search Babbage Text 001
+	TextEmbeddingAda002       = "text-embedding-ada-002"        // TextEmbeddingAda002 Text Embedding Ada 002
 )
 
 const (
@@ -58,10 +58,6 @@ const (
 	defaultUserAgent      = "go-gpt3"
 	defaultTimeoutSeconds = 30
 )
-
-func getEngineURL(engine string) string {
-	return fmt.Sprintf("%s/engines/%s/completions", defaultBaseURL, engine)
-}
 
 // Client is an API client to communicate with the OpenAI gpt-3 APIs
 type Client interface {
@@ -79,8 +75,7 @@ type Client interface {
 
 	// ChatCompletionStream creates a completion with the Chat completion endpoint which
 	// is what powers the ChatGPT experience.
-	ChatCompletionStream(ctx context.Context, request ChatCompletionRequest,
-		onData func(*ChatCompletionStreamResponse)) error
+	ChatCompletionStream(ctx context.Context, request ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error
 
 	// Completion creates a completion with the default engine. This is the main endpoint of the API
 	// which auto-completes based on the given prompt.
@@ -91,11 +86,10 @@ type Client interface {
 	CompletionStream(ctx context.Context, request CompletionRequest, onData func(*CompletionResponse)) error
 
 	// CompletionWithEngine is the same as Completion except allows overriding the default engine on the client
-	CompletionWithEngine(ctx context.Context, engine string, request CompletionRequest) (*CompletionResponse, error)
+	CompletionWithEngine(ctx context.Context, request CompletionRequest) (*CompletionResponse, error)
 
 	// CompletionStreamWithEngine is the same as CompletionStream allows overriding the default engine on the client
-	CompletionStreamWithEngine(ctx context.Context, engine string, request CompletionRequest,
-		onData func(*CompletionResponse)) error
+	CompletionStreamWithEngine(ctx context.Context, request CompletionRequest, onData func(*CompletionResponse)) error
 
 	// Edits is given a prompt and an instruction, the model will return an edited version of the prompt.
 	Edits(ctx context.Context, request EditsRequest) (*EditsResponse, error)
@@ -198,8 +192,7 @@ func (c *client) ChatCompletion(ctx context.Context, request ChatCompletionReque
 
 // ChatCompletionStream creates a completion with the Chat completion endpoint which
 // is what powers the ChatGPT experience.
-func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletionRequest,
-	onData func(*ChatCompletionStreamResponse)) error {
+func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error {
 	if request.Model == "" {
 		request.Model = GPT3Dot5Turbo
 	}
@@ -241,14 +234,13 @@ func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletio
 
 // Completion creates a completion with the default engine.
 func (c *client) Completion(ctx context.Context, request CompletionRequest) (*CompletionResponse, error) {
-	return c.CompletionWithEngine(ctx, c.defaultEngine, request)
+	return c.CompletionWithEngine(ctx, request)
 }
 
 // CompletionWithEngine creates a completion with the specified engine.
-func (c *client) CompletionWithEngine(ctx context.Context, engine string,
-	request CompletionRequest) (*CompletionResponse, error) {
+func (c *client) CompletionWithEngine(ctx context.Context, request CompletionRequest) (*CompletionResponse, error) {
 	request.Stream = false
-	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/engines/%s/completions", engine), request)
+	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/completions"), request)
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +258,7 @@ func (c *client) CompletionWithEngine(ctx context.Context, engine string,
 // CompletionStream creates a completion with the default engine.
 func (c *client) CompletionStream(ctx context.Context, request CompletionRequest,
 	onData func(*CompletionResponse)) error {
-	return c.CompletionStreamWithEngine(ctx, c.defaultEngine, request, onData)
+	return c.CompletionStreamWithEngine(ctx, request, onData)
 }
 
 var (
@@ -275,10 +267,10 @@ var (
 )
 
 // CompletionStreamWithEngine creates a completion with the specified engine.
-func (c *client) CompletionStreamWithEngine(ctx context.Context, engine string, request CompletionRequest,
+func (c *client) CompletionStreamWithEngine(ctx context.Context, request CompletionRequest,
 	onData func(*CompletionResponse)) error {
 	request.Stream = true
-	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/engines/%s/completions", engine), request)
+	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/completions"), request)
 	if err != nil {
 		return err
 	}
