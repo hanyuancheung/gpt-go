@@ -1,4 +1,4 @@
-GPT-Go: GPT-3 Go-SDK 客户端, 封装 OpenAI 官方 GPT-3 APIs.
+GPT-Go: GPT-4/GPT-3 Go-SDK 客户端, 封装 OpenAI 官方 GPT-4/GPT-3 APIs.
 ========================
 
 <p align="center">
@@ -10,6 +10,8 @@ GPT-Go: GPT-3 Go-SDK 客户端, 封装 OpenAI 官方 GPT-3 APIs.
 [![Go Report Card](https://goreportcard.com/badge/hanyuancheung/gpt-go)](https://goreportcard.com/report/hanyuancheung/gpt-go)
 
 OpenAI 官方文档 API 参考: https://platform.openai.com/docs/api-reference/introduction
+
+项目已支持 GPT-4 API 调用, 请使用 Chat Completions API 模型.
 
 ## 快速开始
 
