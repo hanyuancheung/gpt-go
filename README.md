@@ -1,4 +1,4 @@
-GPT-Go: OpenAI GPT-3 SDK Client Enables Go Programs to Interact with the GPT-3 APIs.
+GPT-Go: OpenAI ChatGPT/GPT-4/GPT-3 SDK Go Client to Interact with the GPT-4/GPT-3 APIs.
 ========================
 
 <p align="center">
@@ -10,6 +10,8 @@ GPT-Go: OpenAI GPT-3 SDK Client Enables Go Programs to Interact with the GPT-3 A
 [![Go Report Card](https://goreportcard.com/badge/hanyuancheung/gpt-go)](https://goreportcard.com/report/hanyuancheung/gpt-go)
 
 OpenAI Docs API Reference: https://platform.openai.com/docs/api-reference/introduction
+
+Already support GPT-4 API, please use Chat Completions API.
 
 ## Quick Start
 

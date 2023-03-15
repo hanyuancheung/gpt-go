@@ -32,6 +32,7 @@ const (
 type EmbeddingEngine string
 
 const (
+	GPT4                      = "gpt4"                          // GPT4 GPT-4
 	GPT3Dot5Turbo             = "gpt-3.5-turbo"                 // GPT3Dot5Turbo GPT-3.5 Turbo
 	GPT3Dot5Turbo0301         = "gpt-3.5-turbo-0301"            // GPT3Dot5Turbo0301 GPT-3.5 Turbo 0301
 	TextSimilarityAda001      = "text-similarity-ada-001"       // TextSimilarityAda001 Text Similarity Ada 001
