@@ -8,6 +8,7 @@ GPT-Go: OpenAI ChatGPT/GPT-4/GPT-3 SDK Go Client to Interact with the GPT-4/GPT-
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/csuzhang/gpt-go/main/LICENSE) ![Go](https://github.com/hanyuancheung/gpt-go/workflows/Go/badge.svg)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/hanyuancheung/gpt-go)](https://pkg.go.dev/github.com/hanyuancheung/gpt-go)
 [![Go Report Card](https://goreportcard.com/badge/hanyuancheung/gpt-go)](https://goreportcard.com/report/hanyuancheung/gpt-go)
+[![codecov](https://codecov.io/gh/hanyuancheung/gpt-go/branch/main/graph/badge.svg)](https://codecov.io/gh/hanyuancheung/gpt-go)
 
 OpenAI Docs API Reference: https://platform.openai.com/docs/api-reference/introduction
 
