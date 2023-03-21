@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -241,7 +240,7 @@ func (c *client) Completion(ctx context.Context, request CompletionRequest) (*Co
 // CompletionWithEngine creates a completion with the specified engine.
 func (c *client) CompletionWithEngine(ctx context.Context, request CompletionRequest) (*CompletionResponse, error) {
 	request.Stream = false
-	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/completions"), request)
+	req, err := c.newRequest(ctx, "POST", "/completions", request)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +270,7 @@ var (
 func (c *client) CompletionStreamWithEngine(ctx context.Context, request CompletionRequest,
 	onData func(*CompletionResponse)) error {
 	request.Stream = true
-	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/completions"), request)
+	req, err := c.newRequest(ctx, "POST", "/completions", request)
 	if err != nil {
 		return err
 	}
@@ -380,7 +379,7 @@ func checkForSuccess(rsp *http.Response) error {
 		return nil
 	}
 	defer rsp.Body.Close()
-	data, err := ioutil.ReadAll(rsp.Body)
+	data, err := io.ReadAll(rsp.Body)
 	if err != nil {
 		return fmt.Errorf("failed to read from body: %w", err)
 	}
