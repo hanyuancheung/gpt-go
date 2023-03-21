@@ -11,7 +11,7 @@ GPT-Go: OpenAI ChatGPT/GPT-4/GPT-3 SDK Go Client to Interact with the GPT-4/GPT-
 
 OpenAI Docs API Reference: https://platform.openai.com/docs/api-reference/introduction
 
-Already support GPT-4 API, please use Chat Completions API.
+> **Note**: Already support GPT-4 API, please use Chat Completions API.
 
 ## Quick Start
 
