@@ -61,6 +61,10 @@ make chatgpt-example
 在正式大量开发前, 请在 GitHub 上打开一个 issue 提问.
 提交 PR 中的代码必须使用 `gofmt` 进行过滤.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hanyuancheung/gpt-go&type=Date)](https://star-history.com/#hanyuancheung/gpt-go&Date)
+
 ## 证书
 
 这个包是在 MIT 证书获得许可, 有关详细信息, 请参阅许可证.

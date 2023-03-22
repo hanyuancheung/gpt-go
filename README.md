@@ -65,6 +65,10 @@ Check out the go docs for more detailed documentation on the types and methods p
 Please open up an issue on GitHub before you put a lot of efforts on pull request.
 The code submitting to PR must be filtered with `gofmt`.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hanyuancheung/gpt-go&type=Date)](https://star-history.com/#hanyuancheung/gpt-go&Date)
+
 ## License
 
 This package is licensed under MIT license. See LICENSE for details.
