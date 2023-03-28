@@ -48,6 +48,7 @@ make chatgpt-example
 - [x] Completion API (是主要的 gpt-3 API)
 - [x] 对 Completion API 的流式支持
 - [x] 文档搜索 API
+- [x] 图片生成 API
 - [x] 替换默认 url、用户代理、超时和其他选项
 
 ## 贡献者

@@ -362,6 +362,23 @@ func (c *client) Embeddings(ctx context.Context, request EmbeddingsRequest) (*Em
 	return &output, nil
 }
 
+// Image creates an image
+func (c *client) Image(ctx context.Context, request ImageRequest) (*ImageResponse, error) {
+	req, err := c.newRequest(ctx, "POST", "/images/generations", request)
+	if err != nil {
+		return nil, err
+	}
+	rsp, err := c.performRequest(req)
+	if err != nil {
+		return nil, err
+	}
+	output := ImageResponse{}
+	if err := getResponseObject(rsp, &output); err != nil {
+		return nil, err
+	}
+	return &output, nil
+}
+
 func (c *client) performRequest(req *http.Request) (*http.Response, error) {
 	rsp, err := c.httpClient.Do(req)
 	if err != nil {

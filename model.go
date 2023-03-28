@@ -285,3 +285,24 @@ type SearchResponse struct {
 	Data   []SearchData `json:"data"`
 	Object string       `json:"object"`
 }
+
+// ImageRequest represents the request structure for the image API.
+type ImageRequest struct {
+	Prompt         string `json:"prompt,omitempty"`
+	N              int    `json:"n,omitempty"`
+	Size           string `json:"size,omitempty"`
+	ResponseFormat string `json:"response_format,omitempty"`
+	User           string `json:"user,omitempty"`
+}
+
+// ImageResponse represents a response structure for image API.
+type ImageResponse struct {
+	Created int64                    `json:"created,omitempty"`
+	Data    []ImageResponseDataInner `json:"data,omitempty"`
+}
+
+// ImageResponseDataInner represents a response data structure for image API.
+type ImageResponseDataInner struct {
+	URL     string `json:"url,omitempty"`
+	B64JSON string `json:"b64_json,omitempty"`
+}

@@ -52,6 +52,7 @@ Check out the go docs for more detailed documentation on the types and methods p
 - [x] Completion API (this is the main gpt-3 API)
 - [x] Streaming support for the Completion API
 - [x] Document Search API
+- [x] Image generation API
 - [x] Overriding default url, user-agent, timeout, and other options
 
 ## Contributor
