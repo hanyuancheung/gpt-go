@@ -55,6 +55,70 @@ Check out the go docs for more detailed documentation on the types and methods p
 - [x] Image generation API
 - [x] Overriding default url, user-agent, timeout, and other options
 
+## Usage Examples
+
+<details>
+<summary>ChatGPT streaming completion</summary>
+
+```golang
+func main() {
+	client := gpt.NewClient("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")
+	err := client.ChatCompletionStream(context.Background(), &gpt.ChatCompletionRequest{
+		Model: gpt.GPT3Dot5Turbo,
+		Messages: []gpt.ChatCompletionRequestMessage{
+			{
+				Role:    "user",
+				Content: "Hello!",
+			},
+		},
+	}, func(response *gpt.ChatCompletionStreamResponse) {
+		fmt.Print(response.Choices[0].Delta.Content)
+	})
+	if err != nil {
+		fmt.Printf("ChatCompletionStream error: %v\n", err)
+		return
+	}
+}
+```
+</details>
+
+<details>
+<summary>GPT-3 completion</summary>
+
+```golang
+func main() {
+	client := gpt.NewClient("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")
+	rsp, err := client.CompletionWithEngine(context.Background(), &gpt.CompletionRequest{
+		Model:  gpt.TextDavinci003Engine,
+		Prompt: []string{"Hello!"},
+	})
+	if err != nil {
+		fmt.Printf("ChatCompletionStream error: %v\n", err)
+		return
+	}
+	fmt.Print(rsp.Choices[0].Text)
+}
+```
+</details>
+
+<details>
+<summary>DALL-E 2 image generation</summary>
+
+```golang
+func main() {
+	client := gpt.NewClient("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")
+	rsp, err := client.Image(context.Background(), &gpt.ImageRequest{
+		Prompt: "Chicken",
+	})
+	if err != nil {
+		fmt.Printf("ChatCompletionStream error: %v\n", err)
+		return
+	}
+	fmt.Print(rsp.Data[0].URL)
+}
+```
+</details>
+
 ## Contributor
 
 <a href="https://github.com/hanyuancheung/gpt-go/graphs/contributors">

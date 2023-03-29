@@ -27,9 +27,6 @@ const (
 	DefaultEngine        = DavinciEngine      // DefaultEngine Default Engine
 )
 
-// EmbeddingEngine is the type of the embedding engine
-type EmbeddingEngine string
-
 const (
 	GPT4                      = "gpt4"                          // GPT4 GPT-4
 	GPT3Dot5Turbo             = "gpt-3.5-turbo"                 // GPT3Dot5Turbo GPT-3.5 Turbo
@@ -59,6 +56,16 @@ const (
 	defaultTimeoutSeconds = 30
 )
 
+// Image sizes defined by the OpenAI API.
+const (
+	CreateImageSize256x256   = "256x256"   // CreateImageSize256x256 256x256
+	CreateImageSize512x512   = "512x512"   // CreateImageSize512x512 512x512
+	CreateImageSize1024x1024 = "1024x1024" // CreateImageSize1024x1024 1024x1024
+
+	CreateImageResponseFormatURL     = "url"      // CreateImageResponseFormatURL URL
+	CreateImageResponseFormatB64JSON = "b64_json" // CreateImageResponseFormatB64JSON B64 JSON
+)
+
 // Client is an API client to communicate with the OpenAI gpt-3 APIs
 type Client interface {
 	// Engines lists the currently available engines, and provides basic information about each
@@ -71,37 +78,40 @@ type Client interface {
 
 	// ChatCompletion creates a completion with the Chat completion endpoint which
 	// is what powers the ChatGPT experience.
-	ChatCompletion(ctx context.Context, request ChatCompletionRequest) (*ChatCompletionResponse, error)
+	ChatCompletion(ctx context.Context, request *ChatCompletionRequest) (*ChatCompletionResponse, error)
 
 	// ChatCompletionStream creates a completion with the Chat completion endpoint which
 	// is what powers the ChatGPT experience.
-	ChatCompletionStream(ctx context.Context, request ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error
+	ChatCompletionStream(ctx context.Context, request *ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error
 
 	// Completion creates a completion with the default engine. This is the main endpoint of the API
 	// which auto-completes based on the given prompt.
-	Completion(ctx context.Context, request CompletionRequest) (*CompletionResponse, error)
+	Completion(ctx context.Context, request *CompletionRequest) (*CompletionResponse, error)
 
 	// CompletionStream creates a completion with the default engine and streams the results through
 	// multiple calls to onData.
-	CompletionStream(ctx context.Context, request CompletionRequest, onData func(*CompletionResponse)) error
+	CompletionStream(ctx context.Context, request *CompletionRequest, onData func(*CompletionResponse)) error
 
 	// CompletionWithEngine is the same as Completion except allows overriding the default engine on the client
-	CompletionWithEngine(ctx context.Context, request CompletionRequest) (*CompletionResponse, error)
+	CompletionWithEngine(ctx context.Context, request *CompletionRequest) (*CompletionResponse, error)
 
 	// CompletionStreamWithEngine is the same as CompletionStream allows overriding the default engine on the client
-	CompletionStreamWithEngine(ctx context.Context, request CompletionRequest, onData func(*CompletionResponse)) error
+	CompletionStreamWithEngine(ctx context.Context, request *CompletionRequest, onData func(*CompletionResponse)) error
 
 	// Edits is given a prompt and an instruction, the model will return an edited version of the prompt.
-	Edits(ctx context.Context, request EditsRequest) (*EditsResponse, error)
+	Edits(ctx context.Context, request *EditsRequest) (*EditsResponse, error)
 
 	// Search performs a semantic search over a list of documents with the default engine.
-	Search(ctx context.Context, request SearchRequest) (*SearchResponse, error)
+	Search(ctx context.Context, request *SearchRequest) (*SearchResponse, error)
 
 	// SearchWithEngine performs a semantic search over a list of documents with the specified engine.
-	SearchWithEngine(ctx context.Context, engine string, request SearchRequest) (*SearchResponse, error)
+	SearchWithEngine(ctx context.Context, engine string, request *SearchRequest) (*SearchResponse, error)
 
 	// Embeddings Returns an embedding using the provided request.
-	Embeddings(ctx context.Context, request EmbeddingsRequest) (*EmbeddingsResponse, error)
+	Embeddings(ctx context.Context, request *EmbeddingsRequest) (*EmbeddingsResponse, error)
+
+	// Image returns an image using the provided request.
+	Image(ctx context.Context, request *ImageRequest) (*ImageResponse, error)
 }
 
 type client struct {
@@ -170,12 +180,12 @@ func (c *client) Engine(ctx context.Context, engine string) (*EngineObject, erro
 
 // ChatCompletion creates a completion with the Chat completion endpoint which
 // is what powers the ChatGPT experience.
-func (c *client) ChatCompletion(ctx context.Context, request ChatCompletionRequest) (*ChatCompletionResponse, error) {
+func (c *client) ChatCompletion(ctx context.Context, request *ChatCompletionRequest) (*ChatCompletionResponse, error) {
 	if request.Model == "" {
 		request.Model = GPT3Dot5Turbo
 	}
 	request.Stream = false
-	req, err := c.newRequest(ctx, "POST", "/chat/completions", request)
+	req, err := c.newRequest(ctx, "POST", "/chat/completions", &request)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +202,7 @@ func (c *client) ChatCompletion(ctx context.Context, request ChatCompletionReque
 
 // ChatCompletionStream creates a completion with the Chat completion endpoint which
 // is what powers the ChatGPT experience.
-func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error {
+func (c *client) ChatCompletionStream(ctx context.Context, request *ChatCompletionRequest, onData func(*ChatCompletionStreamResponse)) error {
 	if request.Model == "" {
 		request.Model = GPT3Dot5Turbo
 	}
@@ -233,14 +243,14 @@ func (c *client) ChatCompletionStream(ctx context.Context, request ChatCompletio
 }
 
 // Completion creates a completion with the default engine.
-func (c *client) Completion(ctx context.Context, request CompletionRequest) (*CompletionResponse, error) {
+func (c *client) Completion(ctx context.Context, request *CompletionRequest) (*CompletionResponse, error) {
 	return c.CompletionWithEngine(ctx, request)
 }
 
 // CompletionWithEngine creates a completion with the specified engine.
-func (c *client) CompletionWithEngine(ctx context.Context, request CompletionRequest) (*CompletionResponse, error) {
+func (c *client) CompletionWithEngine(ctx context.Context, request *CompletionRequest) (*CompletionResponse, error) {
 	request.Stream = false
-	req, err := c.newRequest(ctx, "POST", "/completions", request)
+	req, err := c.newRequest(ctx, "POST", "/completions", &request)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +266,7 @@ func (c *client) CompletionWithEngine(ctx context.Context, request CompletionReq
 }
 
 // CompletionStream creates a completion with the default engine.
-func (c *client) CompletionStream(ctx context.Context, request CompletionRequest,
+func (c *client) CompletionStream(ctx context.Context, request *CompletionRequest,
 	onData func(*CompletionResponse)) error {
 	return c.CompletionStreamWithEngine(ctx, request, onData)
 }
@@ -267,10 +277,10 @@ var (
 )
 
 // CompletionStreamWithEngine creates a completion with the specified engine.
-func (c *client) CompletionStreamWithEngine(ctx context.Context, request CompletionRequest,
+func (c *client) CompletionStreamWithEngine(ctx context.Context, request *CompletionRequest,
 	onData func(*CompletionResponse)) error {
 	request.Stream = true
-	req, err := c.newRequest(ctx, "POST", "/completions", request)
+	req, err := c.newRequest(ctx, "POST", "/completions", &request)
 	if err != nil {
 		return err
 	}
@@ -306,8 +316,8 @@ func (c *client) CompletionStreamWithEngine(ctx context.Context, request Complet
 }
 
 // Edits is given a prompt and an instruction, the model will return an edited version of the prompt.
-func (c *client) Edits(ctx context.Context, request EditsRequest) (*EditsResponse, error) {
-	req, err := c.newRequest(ctx, "POST", "/edits", request)
+func (c *client) Edits(ctx context.Context, request *EditsRequest) (*EditsResponse, error) {
+	req, err := c.newRequest(ctx, "POST", "/edits", &request)
 	if err != nil {
 		return nil, err
 	}
@@ -323,13 +333,13 @@ func (c *client) Edits(ctx context.Context, request EditsRequest) (*EditsRespons
 }
 
 // Search creates a search with the default engine.
-func (c *client) Search(ctx context.Context, request SearchRequest) (*SearchResponse, error) {
+func (c *client) Search(ctx context.Context, request *SearchRequest) (*SearchResponse, error) {
 	return c.SearchWithEngine(ctx, c.defaultEngine, request)
 }
 
 // SearchWithEngine performs a semantic search over a list of documents with the specified engine.
-func (c *client) SearchWithEngine(ctx context.Context, engine string, request SearchRequest) (*SearchResponse, error) {
-	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/engines/%s/search", engine), request)
+func (c *client) SearchWithEngine(ctx context.Context, engine string, request *SearchRequest) (*SearchResponse, error) {
+	req, err := c.newRequest(ctx, "POST", fmt.Sprintf("/engines/%s/search", engine), &request)
 	if err != nil {
 		return nil, err
 	}
@@ -346,8 +356,8 @@ func (c *client) SearchWithEngine(ctx context.Context, engine string, request Se
 
 // Embeddings creates text embeddings for a supplied slice of inputs with a provided model.
 // See: https://beta.openai.com/docs/api-reference/embeddings
-func (c *client) Embeddings(ctx context.Context, request EmbeddingsRequest) (*EmbeddingsResponse, error) {
-	req, err := c.newRequest(ctx, "POST", "/embeddings", request)
+func (c *client) Embeddings(ctx context.Context, request *EmbeddingsRequest) (*EmbeddingsResponse, error) {
+	req, err := c.newRequest(ctx, "POST", "/embeddings", &request)
 	if err != nil {
 		return nil, err
 	}
@@ -363,8 +373,8 @@ func (c *client) Embeddings(ctx context.Context, request EmbeddingsRequest) (*Em
 }
 
 // Image creates an image
-func (c *client) Image(ctx context.Context, request ImageRequest) (*ImageResponse, error) {
-	req, err := c.newRequest(ctx, "POST", "/images/generations", request)
+func (c *client) Image(ctx context.Context, request *ImageRequest) (*ImageResponse, error) {
+	req, err := c.newRequest(ctx, "POST", "/images/generations", &request)
 	if err != nil {
 		return nil, err
 	}

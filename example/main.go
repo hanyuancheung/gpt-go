@@ -64,7 +64,7 @@ func validateQuestion(question string) string {
 
 // GetResponse get response from gpt3
 func GetResponse(client gpt.Client, ctx context.Context, question string) {
-	err := client.CompletionStreamWithEngine(ctx, gpt.CompletionRequest{
+	err := client.CompletionStreamWithEngine(ctx, &gpt.CompletionRequest{
 		Model: gpt.TextDavinci003Engine,
 		Prompt: []string{
 			question,
