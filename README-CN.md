@@ -58,7 +58,7 @@ make chatgpt-example
 
 ```golang
 func main() {
-	client := gpt.NewClient("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")
+	client := gpt.NewClient("API_KEY")
 	err := client.ChatCompletionStream(context.Background(), &gpt.ChatCompletionRequest{
 		Model: gpt.GPT3Dot5Turbo,
 		Messages: []gpt.ChatCompletionRequestMessage{
@@ -83,7 +83,7 @@ func main() {
 
 ```golang
 func main() {
-	client := gpt.NewClient("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")
+	client := gpt.NewClient("API_KEY")
 	rsp, err := client.CompletionWithEngine(context.Background(), &gpt.CompletionRequest{
 		Model:  gpt.TextDavinci003Engine,
 		Prompt: []string{"Hello!"},
@@ -102,7 +102,7 @@ func main() {
 
 ```golang
 func main() {
-	client := gpt.NewClient("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")
+	client := gpt.NewClient("API_KEY")
 	rsp, err := client.Image(context.Background(), &gpt.ImageRequest{
 		Prompt: "Chicken",
 	})
